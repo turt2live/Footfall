@@ -8,7 +8,9 @@ void ofApp::setup()
     // Setup HTTP Handler
     httpHandler.setup(config.getSettings().postserver,
                       config.getSettings().postextension,
-                      config.getSettings().secretkey
+                      config.getSettings().secretkey,
+                      config.getSettings().zonename,
+                      config.getSettings().location
                       );
     
     // Setup Video and Tracking

@@ -59,6 +59,8 @@ void LoadConfig::load(string file)
         // Post Data Settings
         s.postserver = config["Footfall"]["PostDataSettings"]["postserver"].asString();
         s.postextension = config["Footfall"]["PostDataSettings"]["postextension"].asString();
+        s.zonename = config["Footfall"]["PostDataSettings"]["zonename"].asString();
+        s.location = config["Footfall"]["PostDataSettings"]["location"].asString();
         s.secretkey = config["Footfall"]["PostDataSettings"]["secretkey"].asString();
         s.maxretries = config["Footfall"]["PostDataSettings"]["maxretries"].asInt();
     }

@@ -8,11 +8,13 @@
 
 #include "HTTPHandler.h"
 //--------------------------------------------------------------
-void HTTPHandler::setup(string postServer, string postExtension, string secretKey)
+void HTTPHandler::setup(string postServer, string postExtension, string secretKey, string zoneName, string location)
 {
     _postServer = postServer;
     _postExtension = postExtension;
     _secretKey = secretKey;
+    _zoneName = zoneName;
+    _location = location;
     _responseStr = "";
     
     ofAddListener(postUtils.newResponseEvent, this, &HTTPHandler::newResponse);
@@ -32,9 +34,10 @@ void HTTPHandler::post(string count)
     formIn.action = _postServer +"/"+_postExtension;
     formIn.method = OFX_HTTP_POST;
     formIn.addFormField("secret", _secretKey);
-    formIn.addFormField("location", "1");
+    formIn.addFormField("location", _location);
     formIn.addFormField("count", count);
     formIn.addFormField("rawtimestamp", ofGetTimestampString("%Y-%m-%d %H:%M:%s"));
+    formIn.addFormField("zone", _zoneName);
     formIn.addFormField("submit","1");
     postUtils.addForm(formIn);
 }

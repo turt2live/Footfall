@@ -90,8 +90,9 @@ Then in the SQL panel, paste the following statement. <br>This will create the t
 ````
 CREATE TABLE IF NOT EXISTS `data` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `locationID` tinyint(4) NOT NULL,
+  `location` varchar(255) NOT NULL,
   `event` tinyint(4) NOT NULL,
+  `zone` varchar(255) NOT NULL,
   KEY `timestamp` (`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 ````
@@ -147,8 +148,9 @@ Then in the SQL panel, paste the following statement. <br>This will create the t
 ````
 CREATE TABLE IF NOT EXISTS `data` (
   `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `locationID` tinyint(4) NOT NULL,
+  `location` varchar(255) NOT NULL,
   `event` tinyint(4) NOT NULL,
+  `zone` varchar(255) NOT NULL,
   KEY `timestamp` (`timestamp`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 ````

@@ -16,7 +16,7 @@
 class HTTPHandler {
     
 public:
-    void setup(string postServer,string postExtension,string secretKey);
+    void setup(string postServer,string postExtension,string secretKey, string zoneName, string location);
     void close();
     void post(string count);
     void newResponse(ofxHttpResponse & response);
@@ -27,6 +27,8 @@ private:
     string _postServer;
     string _postExtension;
     string _secretKey;
+    string _zoneName;
+    string _location;
     string _responseStr;
     string _requestStr;
     ofxHttpUtils postUtils;

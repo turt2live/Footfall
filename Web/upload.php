@@ -23,11 +23,12 @@ if (isset($_POST['submit'])) {
 		$location = $_POST['location'];
 		$count = $_POST['count'];
 		$rawtimestamp = $_POST['rawtimestamp'];
+		$zone = $_POST['zone'];
 
 		// Prepare INSERT QUERY
-		$sqlq = "INSERT INTO `data` (`timestamp`,`locationID`,`event`) VALUES (:rawtimestamp,:location,:count)";
+		$sqlq = "INSERT INTO `data` (`timestamp`,`location`,`event`,`zone`) VALUES (:rawtimestamp,:location,:count,:zone)";
 		$q = $DBH->prepare($sqlq);
-		$q->execute(array(':rawtimestamp' => $rawtimestamp, ':count' => $count, ':location' => $location));
+		$q->execute(array(':rawtimestamp' => $rawtimestamp, ':count' => $count, ':location' => $location, ':zone' => $zone));
 
 		// Error Handling
 		if (!$q) {
@@ -37,73 +38,14 @@ if (isset($_POST['submit'])) {
 		else {
 			echo "Count: " .$count;
 			echo "</br>";
-			echo "Location: " . $location;
-			echo "</br>";
+            echo "Location: " . $location;
+            echo "</br>";
+            echo "Zone: " . $zone;
+            echo "</br>";
 			echo "Raw Timestamp: " . $rawtimestamp;
 			exit;
 		}
-}
-elseif (isset($_GET['get'])){
-	if (isset($_GET['interval']) && intval($_GET['interval'])) {
-		$interval = intval($_GET['interval']);
-	}
-	else {
-		// Default interval of 1 hour
-		$interval = 3600;
-	}
-	$query = "
-				SELECT  FROM_UNIXTIME(FLOOR(UNIX_TIMESTAMP(timestamp)/".$interval.")*".$interval.") AS timekey,
-				SUM(event) as movement,
-				SUM(IF(event >0, event, 0)) as peoplein,
-				SUM(IF(event < 0, ABS(event), 0)) as peopleout
-				FROM     data
-				WHERE DATE(timestamp) = DATE(NOW())
-				GROUP BY timekey
-				ORDER BY timekey ASC
-			";
-
-	$get = $DBH->prepare($query);
-	$get->execute();
-
-	if (!$get) {
-		echo "Error: couldn't execute query. ".$get->errorCode();
-		exit;
-	}
-
-	if ($get->rowCount() == 0) {
-		echo "[]";
-		exit;
-	}
-	$rows = array();
-	$runningtotal = 0;
-	$runningtotalin = 0;
-	$rowCount = 0;
-	$totalin = 0;
-	while ($row = $get->fetch(PDO::FETCH_ASSOC)) {
-		$runningtotal += $row['movement'];
-		$row['total'] = $runningtotal;
-		$totalin += $row['peoplein'];
-		$row['totalin'] = $totalin;
-		$rows[$row['timekey']] = $row;
-		if ($rowCount == 0) {
-			$starttime = strtotime($row['timekey']);
-		}
-		$rowCount++;
-	}
-	$endtime = time() - (time() % $interval);
-	for ($t = $starttime; $t <= $endtime; $t += $interval) {
-		$dt = date("Y-m-d H:i:s",$t);
-		if (!isset($rows[$dt])) {
-			$rows[$dt] = array("timekey" => $dt, "movement" => 0, "peoplein" => 0, "peopleout" => 0, "total" => $runningtotal, "totalin" => $runningtotalin);
-		}
-		else {
-			$runningtotal = $rows[$dt]['total'];
-			$runningtotalin = $rows[$dt]['totalin'];
-		}
-	}
-	ksort($rows); // sort
-	$rows = array_values($rows); // change back into indexed
-
-	echo json_encode($rows);
+} else {
+    http_response_code(404);
 }
 ?>

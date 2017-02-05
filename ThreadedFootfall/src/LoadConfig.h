@@ -42,6 +42,8 @@ struct Settings {
     string postserver;
     string postextension;
     string secretkey;
+    string zonename;
+    string location;
     int maxretries;
     
     ofPoint startPos;
