@@ -1,3 +1,9 @@
+#!/bin/bash
+
+if [ ! -f /~/openFrameworks/apps/myApps/projectFolder/bin/data/config.json ]; then
+        whiptail --title "Expo Configuration Wizard" --msgbox "ERROR - Config.Json missing. Please confirm Footfall is installed." 10 60
+        exit
+fi
 
 WorkingDir=~/openFrameworks/apps/myApps/projectFolder/bin/data/
 
