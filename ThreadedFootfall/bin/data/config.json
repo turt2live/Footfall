@@ -44,6 +44,8 @@
             "postserver":"",
             "postextension":"",
             "secretkey":"",
+            "zonename":"",
+            "location":"",
             "maxretries":3
         }
    }
