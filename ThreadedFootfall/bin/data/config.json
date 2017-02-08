@@ -1,8 +1,8 @@
 {
   "Footfall": {
         "AppSettings":{
-            "camerawidth":640,
-            "cameraheight":480
+            "camerawidth":320,
+            "cameraheight":240
         },
         "CVSettings": {
             "MOG" : {
@@ -15,14 +15,14 @@
                 "threshold":150,
                 "minarea":10,
                 "maxarea":150,
-                "blur": 11
+                "blur": 3
             },
             "BreakLine": {
                 "orientation":true,
                 "startposx":0,
-                "startposy":240,
-                "endposx": 640,
-                "endposy":240,
+                "startposy":120,
+                "endposx": 320,
+                "endposy":120,
                 "offset":20
             },
             "Blob" : {
@@ -34,10 +34,10 @@
                 "minsizethree": 200
             },
             "MaskArea": [
-                {"coordx":50,"coordy":0},
-                {"coordx":590,"coordy":0},
-                {"coordx":590,"coordy":480},
-                {"coordx":50,"coordy":480}
+                {"coordx":0,"coordy":0},
+                {"coordx":250,"coordy":0},
+                {"coordx":250,"coordy":240},
+                {"coordx":0,"coordy":240}
             ]
         },
         "PostDataSettings": {
